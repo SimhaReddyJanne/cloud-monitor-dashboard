@@ -8,11 +8,13 @@ def get_s3_buckets():
     s3 = boto3.client('s3', region_name='us-east-1')
     response = s3.list_buckets()
     buckets = []
+
     for bucket in response['Buckets']:
         buckets.append({
             'name': bucket['Name'],
             'creation_date': bucket['CreationDate']
         })
+
     return buckets
 
 # --- EC2 Monitoring ---
@@ -20,6 +22,7 @@ def get_ec2_instances():
     ec2 = boto3.client('ec2', region_name='us-east-1')
     response = ec2.describe_instances()
     instances = []
+
     for reservation in response['Reservations']:
         for instance in reservation['Instances']:
             instances.append({
@@ -28,6 +31,7 @@ def get_ec2_instances():
                 'state': instance['State']['Name'],
                 'az': instance['Placement']['AvailabilityZone']
             })
+
     return instances
 
 # --- IAM Monitoring ---
@@ -35,11 +39,13 @@ def get_iam_users():
     iam = boto3.client('iam', region_name='us-east-1')
     response = iam.list_users()
     users = []
+
     for user in response['Users']:
         users.append({
             'username': user['UserName'],
             'created_at': user['CreateDate']
         })
+
     return users
 
 # --- Route ---
