@@ -2,13 +2,49 @@
 <html>
 <head>
     <title>Cloud Monitoring Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 40px;
+            background-color: #f4f4f4;
+        }
+        h2 {
+            color: #333;
+            border-bottom: 2px solid #ccc;
+            padding-bottom: 5px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            margin-bottom: 30px;
+            background-color: #fff;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 12px 15px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+        th {
+            background-color: #007bff;
+            color: #fff;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .empty-message {
+            color: #777;
+            margin-top: 5px;
+        }
+    </style>
 </head>
 <body>
-    <h1>AWS EC2 Instances</h1>
+    <h2>AWS EC2 Instances</h2>
     {% if ec2_instances %}
-    <table border="1">
+    <table>
         <tr>
-            <th>Instance ID</th>
+            <th>ID</th>
             <th>Type</th>
             <th>State</th>
             <th>Availability Zone</th>
@@ -23,14 +59,12 @@
         {% endfor %}
     </table>
     {% else %}
-        <p>No EC2 instances found in this region.</p>
+    <p class="empty-message">No EC2 instances found in this region.</p>
     {% endif %}
 
-    <hr>
-
-    <h1>AWS S3 Buckets</h1>
+    <h2>AWS S3 Buckets</h2>
     {% if s3_buckets %}
-    <table border="1">
+    <table>
         <tr>
             <th>Bucket Name</th>
             <th>Creation Date</th>
@@ -43,14 +77,12 @@
         {% endfor %}
     </table>
     {% else %}
-        <p>No S3 buckets found in this account.</p>
+    <p class="empty-message">No S3 buckets found.</p>
     {% endif %}
 
-    <hr>
-
-    <h1>AWS IAM Users</h1>
+    <h2>AWS IAM Users</h2>
     {% if iam_users %}
-    <table border="1">
+    <table>
         <tr>
             <th>Username</th>
             <th>Created At</th>
@@ -63,7 +95,7 @@
         {% endfor %}
     </table>
     {% else %}
-        <p>No IAM users found in this account.</p>
+    <p class="empty-message">No IAM users found.</p>
     {% endif %}
 </body>
 </html>
