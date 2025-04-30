@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 # --- S3 Monitoring ---
 def get_s3_buckets():
-    s3 = boto3.client('s3')
+    s3 = boto3.client('s3', region_name='us-east-1')
     response = s3.list_buckets()
     buckets = []
     for bucket in response['Buckets']:
@@ -17,7 +17,7 @@ def get_s3_buckets():
 
 # --- EC2 Monitoring ---
 def get_ec2_instances():
-    ec2 = boto3.client('ec2')
+    ec2 = boto3.client('ec2', region_name='us-east-1')
     response = ec2.describe_instances()
     instances = []
     for reservation in response['Reservations']:
@@ -30,9 +30,9 @@ def get_ec2_instances():
             })
     return instances
 
-# --- IAM User Monitoring ---
+# --- IAM Monitoring ---
 def get_iam_users():
-    iam = boto3.client('iam')
+    iam = boto3.client('iam', region_name='us-east-1')
     response = iam.list_users()
     users = []
     for user in response['Users']:
@@ -48,10 +48,12 @@ def dashboard():
     ec2_instances = get_ec2_instances()
     s3_buckets = get_s3_buckets()
     iam_users = get_iam_users()
-    return render_template('dashboard.html',
-                           ec2_instances=ec2_instances,
-                           s3_buckets=s3_buckets,
-                           iam_users=iam_users)
+    return render_template(
+        'dashboard.html',
+        ec2_instances=ec2_instances,
+        s3_buckets=s3_buckets,
+        iam_users=iam_users
+    )
 
 # --- Run App ---
 if __name__ == '__main__':
